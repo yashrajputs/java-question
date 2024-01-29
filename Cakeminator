@@ -1,0 +1,105 @@
+A. Cakeminator
+time limit per test1 second
+memory limit per test256 megabytes
+inputstandard input
+outputstandard output
+You are given a rectangular cake, represented as an r × c grid. Each cell either has an evil strawberry, or is empty. For example, a 3 × 4 cake may look as follows:
+
+
+The cakeminator is going to eat the cake! Each time he eats, he chooses a row or a column that does not contain any evil strawberries and contains at least one cake cell that has not been eaten before, and eats all the cake cells there. He may decide to eat any number of times.
+
+Please output the maximum number of cake cells that the cakeminator can eat.
+
+Input
+The first line contains two integers r and c (2 ≤ r, c ≤ 10), denoting the number of rows and the number of columns of the cake. The next r lines each contains c characters — the j-th character of the i-th line denotes the content of the cell at row i and column j, and is either one of these:
+
+'.' character denotes a cake cell with no evil strawberry;
+'S' character denotes a cake cell with an evil strawberry.
+Output
+Output the maximum number of cake cells that the cakeminator can eat.
+
+Examples
+inputCopy
+3 4
+S...
+....
+..S.
+outputCopy
+8
+Note
+For the first example, one possible way to eat the maximum number of cake cells is as follows (perform 3 eats).
+
+solution
+
+import java.util.Scanner;
+ 
+public class Cakeminator {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+ 
+        // Input the number of rows and columns
+        int r = scanner.nextInt();
+        int c = scanner.nextInt();
+ 
+        // Input the cake matrix
+        char[][] cake = new char[r][c];
+        for (int i = 0; i < r; i++) {
+            String row = scanner.next();
+            for (int j = 0; j < c; j++) {
+                cake[i][j] = row.charAt(j);
+            }
+        }
+ 
+        // Calculate the maximum number of cake cells the cakeminator can eat
+        int maxCakeCells = getMaxCakeCells(cake, r, c);
+ 
+        // Output the result
+        System.out.println(maxCakeCells);
+ 
+        scanner.close();
+    }
+ 
+    private static int getMaxCakeCells(char[][] cake, int r, int c) {
+        int maxCakeCells = 0;
+ 
+        // Count the cake cells in rows
+        for (int i = 0; i < r; i++) {
+            boolean canEatRow = true;
+            for (int j = 0; j < c; j++) {
+                if (cake[i][j] == 'S') {
+                    canEatRow = false;
+                    break;
+                }
+            }
+            if (canEatRow) {
+                maxCakeCells += c;
+                // Mark the entire row as eaten
+                for (int j = 0; j < c; j++) {
+                    cake[i][j] = 'E';
+                }
+            }
+        }
+ 
+        // Count the cake cells in columns
+        for (int j = 0; j < c; j++) {
+            boolean canEatColumn = true;
+            for (int i = 0; i < r; i++) {
+                if (cake[i][j] == 'S') {
+                    canEatColumn = false;
+                    break;
+                }
+            }
+            if (canEatColumn) {
+                // Mark the entire column as eaten
+                for (int i = 0; i < r; i++) {
+                    if (cake[i][j] != 'E') {
+                        maxCakeCells++;
+                        cake[i][j] = 'E';
+                    }
+                }
+            }
+        }
+ 
+        return maxCakeCells;
+    }
+}
