@@ -1,0 +1,70 @@
+A. Coder
+time limit per test1 second
+memory limit per test256 megabytes
+inputstandard input
+outputstandard output
+Iahub likes chess very much. He even invented a new chess piece named Coder. A Coder can move (and attack) one square horizontally or vertically. More precisely, if the Coder is located at position (x, y), he can move to (or attack) positions (x + 1, y), (x–1, y), (x, y + 1) and (x, y–1).
+
+Iahub wants to know how many Coders can be placed on an n × n chessboard, so that no Coder attacks any other Coder.
+
+Input
+The first line contains an integer n (1 ≤ n ≤ 1000).
+
+Output
+On the first line print an integer, the maximum number of Coders that can be placed on the chessboard.
+
+On each of the next n lines print n characters, describing the configuration of the Coders. For an empty cell print an '.', and for a Coder print a 'C'.
+
+If there are multiple correct answers, you can print any.
+
+Examples
+inputCopy
+2
+outputCopy
+2
+C.
+.C
+
+import java.util.Scanner;
+public class Coder
+{
+    public static void main(String args[])
+    {
+        Scanner z = new Scanner(System.in);
+        StringBuilder sb = new StringBuilder();
+        int a=z.nextInt();
+        if(a==2)
+            System.out.println(a);
+        else if(a%2==0)
+            System.out.println((a*a)/2);
+        else
+        {
+            int b=(int)Math.ceil(a/2);
+            int c=a-b;
+            System.out.println((b*b)+(c*c));
+        }
+        for(int i=0;i<a;i++)
+        {
+            sb.delete(0, a);
+            for(int j=0;j<a;j++)
+            {
+                if(i%2==0)
+                {
+                    if(j%2==0)
+                        sb.append('C');
+                    else
+                        sb.append('.');
+                }
+                else
+                {
+                    if(j%2==0)
+                        sb.append('.');
+                    else
+                        sb.append('C');
+                }
+            }
+            System.out.println(sb);
+        }
+    }
+}
+
